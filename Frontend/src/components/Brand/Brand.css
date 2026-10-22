@@ -1,0 +1,8 @@
+.brand { display: inline-flex; align-items: center; gap: 12px; color: inherit; text-decoration: none; }
+.brand-mark { width: 39px; height: 39px; display: grid; place-items: center; border-radius: 12px; color: #38bdf8; background: #0f172a; box-shadow: 0 3px 10px rgba(15,23,42,.1); transition: transform .2s ease; }
+.brand:hover .brand-mark { transform: scale(1.06); }
+.brand-mark svg { width: 22px; height: 22px; }
+.brand-text { display: flex; flex-direction: column; gap: 3px; }
+.brand-name { color: #0f172a; font: 700 21px/1 'Playfair Display', serif; letter-spacing: -.5px; }
+.brand-name span { color: #0284c7; font: 400 21px/1 'DM Sans', sans-serif; }
+.brand-tagline { color: #94a3b8; font-size: 9px; font-weight: 700; line-height: 1; letter-spacing: .14em; text-transform: uppercase; }

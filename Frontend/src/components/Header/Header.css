@@ -1,0 +1,24 @@
+.site-header { height: 76px; width: 100%; padding: 0 5.5%; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #edf0f4; background: rgba(255,255,255,.88); backdrop-filter: blur(14px); position: sticky; top: 0; z-index: 10; }
+.header-actions, .main-nav, .account-actions { display: flex; align-items: center; }
+.header-actions { gap: 28px; }
+.main-nav { gap: 30px; }
+.main-nav a { color: #64748b; text-decoration: none; font-size: 13px; font-weight: 500; transition: color .2s ease; }
+.main-nav a:hover, .main-nav a.active { color: #0f172a; }
+.main-nav a.active { font-weight: 700; }
+.account-actions { gap: 10px; padding-left: 24px; border-left: 1px solid #e2e8f0; }
+.icon-button { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; cursor: pointer; transition: all .2s ease; }
+.icon-button.secondary { color: #64748b; border: 1px solid #e2e8f0; background: #fff; }
+.icon-button.secondary:hover { color: #0f172a; border-color: #cbd5e1; }
+.icon-button.primary { color: #fff; border: 1px solid #0f172a; background: #0f172a; }
+.icon-button.primary:hover { background: #1e293b; }
+.mobile-menu-button { display: none; background: transparent; border: 0; padding: 8px; cursor: pointer; }
+.mobile-menu-button span { display: block; width: 21px; height: 2px; margin: 4px; background: #0f172a; }
+
+@media (max-width: 720px) {
+  .site-header { height: 68px; padding: 0 20px; }
+  .mobile-menu-button { display: block; }
+  .header-actions { display: none; position: absolute; top: 68px; left: 0; right: 0; padding: 18px 20px; align-items: stretch; flex-direction: column; gap: 18px; border-bottom: 1px solid #edf0f4; background: #fff; box-shadow: 0 14px 30px rgba(15,23,42,.06); }
+  .header-actions.is-open { display: flex; }
+  .main-nav { flex-direction: column; align-items: flex-start; gap: 17px; }
+  .account-actions { padding: 16px 0 0; border-top: 1px solid #f1f5f9; border-left: 0; }
+}

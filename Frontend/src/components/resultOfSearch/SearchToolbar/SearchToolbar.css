@@ -1,0 +1,20 @@
+.results-search-toolbar { width: 100%; margin-bottom: 24px; padding: 10px; display: flex; flex-direction: column; gap: 10px; border-radius: 13px; background: rgba(248,250,252,.8); box-shadow: 0 2px 8px rgba(15,23,42,.04); }
+.results-search-form { min-height: 42px; display: flex; align-items: center; gap: 10px; padding: 0 10px; color: #94a3b8; border-radius: 9px; background: #fff; box-shadow: 0 1px 4px rgba(15,23,42,.05); }
+.results-search-form input { min-width: 0; flex: 1; border: 0; outline: 0; color: #0f172a; font-size: 13px; }
+.results-search-form input::placeholder { color: #94a3b8; }
+.clear-search { display: grid; place-items: center; padding: 3px; border: 0; color: #94a3b8; background: transparent; cursor: pointer; }
+.results-search-button { padding: 8px 13px; border: 0; border-radius: 7px; color: #fff; background: #0f172a; font-size: 11px; font-weight: 700; cursor: pointer; }
+.source-summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.source-pills, .results-count { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+.source-label { margin-right: 4px; color: #94a3b8; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+.source-pill { display: inline-flex; align-items: center; gap: 5px; padding: 5px 9px; border-radius: 999px; color: #94a3b8; background: #fff; font-size: 10px; font-weight: 600; box-shadow: 0 1px 3px rgba(15,23,42,.04); }
+.source-pill.active { color: #fff; background: #0f172a; }
+.source-pill i, .updated i { width: 6px; height: 6px; border-radius: 50%; background: #cbd5e1; }
+.source-pill.active i { background: #34d399; }
+.source-pill small { color: #94a3b8; font-size: 9px; }
+.results-count { color: #64748b; font-size: 10px; }
+.results-count strong { color: #0f172a; }
+.results-count b { color: #cbd5e1; font-weight: 400; }
+.updated { display: inline-flex; align-items: center; gap: 5px; padding: 4px 7px; color: #059669; border-radius: 5px; background: #ecfdf5; }
+.updated i { background: #10b981; }
+@media (max-width: 760px) { .source-summary { align-items: flex-start; flex-direction: column; } }
