@@ -1,78 +1,73 @@
-# React + TypeScript + Vite
+# OneFindr
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+OneFindr es una landing de búsqueda de productos desarrollada con React y TypeScript. Permite introducir una búsqueda, navegar a la página de resultados y filtrar productos por título y plataforma.
 
-Currently, two official plugins are available:
+## Tecnologías
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19
+- TypeScript
+- Vite
+- React Router
+- CSS por componente
+- Iconos personalizados mediante el componente `Icon`
 
-## React Compiler
+## Requisitos
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- Node.js
+- npm
 
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
+## Instalación
 
-## Expanding the ESLint configuration
+Desde la carpeta `Frontend`:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+## Comandos disponibles
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# Inicia el servidor de desarrollo
+npm run dev
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Comprueba los tipos y crea la versión de producción
+npm run build
 
+# Ejecuta ESLint
+npm run lint
+
+# Sirve localmente la versión compilada
+npm run preview
 ```
+
+## Funcionalidades
+
+- Búsqueda de productos desde la página principal.
+- Navegación a resultados mediante el parámetro `q` de la URL.
+- Filtrado por título ignorando mayúsculas, minúsculas y acentos.
+- Filtrado por plataformas activas.
+- Componentes reutilizables para tarjetas, controles, buscadores y modales.
+- Diseño responsive para diferentes tamaños de pantalla.
+
+## Estructura del proyecto
+
+```text
+src/
+├── assets/       # Recursos estáticos
+├── components/   # Componentes reutilizables y sus estilos
+├── hooks/        # Hooks personalizados
+├── page/         # Vistas principales de la aplicación
+├── utils/        # Funciones auxiliares, como los filtros
+├── App.tsx       # Configuración de rutas
+└── types.ts      # Tipos compartidos
+```
+
+## Rutas principales
+
+- `/` — Página de inicio y buscador.
+- `/resultados?q=...` — Resultados de la búsqueda.
+
+## Organización de componentes
+
+Cada componente se encuentra en su propia carpeta junto con su archivo CSS cuando necesita estilos específicos. La lógica de filtrado se mantiene separada en `utils` y los hooks personalizados en `hooks` para facilitar su reutilización y mantenimiento.
+

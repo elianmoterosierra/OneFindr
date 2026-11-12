@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router";
 export function useQueryParam() {
     const [searchParams, setSearchParams] = useSearchParams();
     const query = searchParams.get('q') ?? ''
+    const sources = searchParams.get('sources') ?? ''
 
     const getParam = (name: string) => {
         return searchParams.get(name) ?? ''
@@ -24,11 +25,16 @@ export function useQueryParam() {
     const setQuery = (value: string) => {
         setParam('q', value)
     }
+    const setSources = (value: string[]) => {
+        setParam('sources', value.join(','))
+    }
     return {
         query,
+        sources,
         getParam,
         setParam,
         setQuery,
+        setSources
 
     }
 

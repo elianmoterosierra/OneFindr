@@ -1,22 +1,28 @@
 import { useState } from 'react'
 import { Icon } from '../../Icon/Icon'
 import './SearchToolbar.css'
+import { useFilterProducts } from '../../../hooks/useFilterProduct'
 
-type Source = {
-  name: string
-  count: number
-  active: boolean
-}
+import { useSources } from '../../../store/useSource'
+import type { Product } from '../../../types'
+import { useQueryParam } from '../../../hooks/useQueryParams'
+
 
 type SearchToolbarProps = {
+  source: string[]
   query: string
-  sources: Source[]
+  products: Product[]
   onClear: () => void
   onSearch: (query: string) => void
 }
 
-export function SearchToolbar({ query, sources, onClear, onSearch }: SearchToolbarProps) {
+export function SearchToolbar({ query, onClear, onSearch }: SearchToolbarProps) {
   const [searchValue, setSearchValue] = useState(query)
+  const { sources } = useQueryParam()
+
+
+
+  const activeSource = useSources((state) => state.getActiveSources)
 
   const handleSearch = () => {
     onSearch(searchValue)
@@ -50,14 +56,12 @@ export function SearchToolbar({ query, sources, onClear, onSearch }: SearchToolb
       <div className="source-summary">
         <div className="source-pills">
           <span className="source-label">Fuentes:</span>
-          {sources.map((source) => (
-            <span className={`source-pill ${source.active ? 'active' : ''}`} key={source.name}>
-              <i />{source.name}<small>{source.count}</small>
+          {sources.split(',').map((source: string) => (
+            <span className={`source-pill active`} key={source}>
+              <i />{source}
             </span>
           ))}
         </div>
-
-        <div className="results-count"><strong>84 resultados</strong><span>en 4 plataformas</span><b>•</b><span className="updated"><i />Actualizado hace 2m</span></div>
       </div>
     </section>
   )

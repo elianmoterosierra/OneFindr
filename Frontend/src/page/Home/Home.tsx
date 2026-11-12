@@ -4,50 +4,47 @@ import { Header } from '../../components/Header/Header'
 import { SearchPanel } from '../../components/home/SearchPanel/SearchPanel'
 import '../../App.css'
 import { useQueryParam } from '../../hooks/useQueryParams'
+import { useSources } from '../../store/useSource'
 import { useNavigate } from 'react-router'
 
 
 export function Home() {
 
+
+
     const navigate = useNavigate()
     const { query: queryParam, setQuery } = useQueryParam()
+    const sources = useSources((state) => state.sources)
+    const activePlatforms = sources
+        .filter((source) => source.active)
+        .map((source) => source.key)
     const [query, setQueryInput] = useState(queryParam)
-
-    const [activePlatforms, setActivePlatforms] = useState([
-        'Amazon',
-        'FB Marketplace',
-        'eBay',
-    ])
+    const [error, setError] = useState<string>('')
 
 
-    const [hasSearched, setHasSearched] = useState(false);
-
-    const togglePlatform = (platform: string) => {
-        setActivePlatforms((current) => {
-            if (current.includes(platform)) {
-                return current.filter((item) => item !== platform)
-            }
-
-            return [...current, platform]
-        })
-    }
 
     const submitSearch = () => {
         const cleanQuery = query.trim()
-
         if (!cleanQuery) return
 
-
-        setHasSearched(true)
-        setQuery(cleanQuery)
-        navigate(`/resultados?q=${encodeURIComponent(cleanQuery)}`)
+        if (activePlatforms.length === 0) {
+            setError('Por favor selecciona al menos una plataforma')
+            return
+        }
+        else {
+            setError('') // Limpia el error si todo es correcto
+            setQuery(cleanQuery)
+            navigate(`/resultados?q=${encodeURIComponent(cleanQuery)}&sources=${encodeURIComponent(activePlatforms.join(','))}`)
+        }
     }
+
+
+
 
 
 
     const chooseTrend = (trend: string) => {
-        setQuery(trend)
-        setHasSearched(false)
+        setQueryInput(trend)
     }
 
     return (
@@ -65,11 +62,12 @@ export function Home() {
                 </div>
                 <SearchPanel
                     query={query}
-                    activePlatforms={activePlatforms}
-                    hasSearched={hasSearched}
                     onQueryChange={setQueryInput}
-                    onTogglePlatform={togglePlatform}
                     onSubmit={submitSearch}
+                    error={error}
+
+
+
                 />
                 <div className="trends" aria-label="Tendencias de búsqueda">
                     <span className="trends-label">Tendencias hoy:</span>

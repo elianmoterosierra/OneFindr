@@ -4,9 +4,10 @@ import { PriceInsight } from '../../components/resultOfSearch/PriceInsight/Price
 import { ProductCard } from '../../components/resultOfSearch/ProductCard/ProductCard'
 import { ResultsControls } from '../../components/resultOfSearch/ResultsControls/ResultsControls'
 import { SearchToolbar } from '../../components/resultOfSearch/SearchToolbar/SearchToolbar'
-import { products, sources } from './resultOfSearch.data'
+import { products } from './resultOfSearch.data'
 import './resultOfSearch.css'
 import { useQueryParam } from '../../hooks/useQueryParams'
+import { useFilterProducts } from '../../hooks/useFilterProduct'
 
 
 
@@ -14,18 +15,24 @@ import { useQueryParam } from '../../hooks/useQueryParams'
 export function ResultOfSearch() {
 
   const { query, setQuery } = useQueryParam();
-  const TOTAL_RESULTS = 84
+  const { sources } = useQueryParam()
+
+  const filteredProducts = useFilterProducts(query, sources ? sources.split(',') : [], products)
+  const TOTAL_RESULTS = products.length
 
   return (
     <div className="results-page">
       <Header />
 
       <main className="results-main">
-        <SearchToolbar query={query} sources={sources} onClear={() => setQuery('')} onSearch={setQuery} />
+        <SearchToolbar source={sources ? sources.split(',') : []} query={query} products={products} onClear={() => setQuery('')} onSearch={setQuery} />
         <ResultsControls />
 
         <section className="products-grid" aria-label="Resultados de búsqueda">
-          {products.map((product) => <ProductCard key={product.id} product={product} />)}
+          {filteredProducts.map((product) => <ProductCard key={product.id} product={product} />)}
+          {filteredProducts.length === 0 && (
+            <p className="no-results">No se encontraron productos que coincidan con tu búsqueda.</p>
+          )}
         </section>
 
         <PriceInsight />

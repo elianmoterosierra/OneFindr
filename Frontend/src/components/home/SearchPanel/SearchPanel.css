@@ -6,18 +6,10 @@
 .search-input-wrap input::placeholder { color: #94a3b8; }
 .enter-hint { display: flex; align-items: center; gap: 5px; padding: 0; border: 0; color: #94a3b8; background: transparent; font-size: 10px; cursor: pointer; white-space: nowrap; }
 .enter-hint span { padding: 2px 5px; border-radius: 4px; color: #64748b; background: #e2e8f0; font-family: ui-monospace, monospace; }
-.platforms-section { margin-top: 16px; padding: 15px 2px 1px; border-top: 1px solid #f1f5f9; }
-.platforms-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; color: #94a3b8; font-size: 10px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
-.active-status { display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px; border: 1px solid #d1fae5; border-radius: 999px; color: #059669; background: #ecfdf5; font-size: 10px; letter-spacing: 0; text-transform: none; }
-.active-status i { width: 6px; height: 6px; border-radius: 50%; background: #10b981; box-shadow: 0 0 0 3px rgba(16,185,129,.12); }
-.platform-list { display: flex; flex-wrap: wrap; gap: 8px; }
-.search-feedback { margin: 14px 2px 0; color: #64748b; font-size: 12px; }
-.search-feedback strong { color: #0f172a; }
 
 @media (max-width: 720px) {
   .search-card { margin-top: 31px; padding: 10px; }
   .search-input-wrap { gap: 8px; padding: 0 10px; }
   .search-input-wrap input { font-size: 12px; }
   .enter-hint { display: none; }
-  .platforms-heading { align-items: flex-start; gap: 10px; flex-direction: column; }
 }

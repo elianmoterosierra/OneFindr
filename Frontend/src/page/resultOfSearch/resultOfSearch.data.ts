@@ -1,4 +1,4 @@
-import type { Product } from '../../components/resultOfSearch/ProductCard/ProductCard'
+import type { Product } from '../../types'
 
 export const products: Product[] = [
   { id: 1, image: 'https://images.unsplash.com/photo-1517336714739-489689fd1ca8?auto=format&fit=crop&w=900&q=80', store: 'Wallapop', storeIcon: 'storefront', storeColor: '#059669', badge: 'Mejor precio', state: 'Segunda mano · Impecable', distance: 'A 3.8 km', title: 'Apple MacBook Pro 14” M3 Pro (18GB RAM, 512GB SSD)', description: 'Batería al 100%, con factura Apple Store y garantía hasta 2026.', price: '$1,450', oldPrice: '$1,799', saving: '-$349 ahorro', delivery: 'Trato en mano / Envío' },
@@ -9,10 +9,3 @@ export const products: Product[] = [
   { id: 6, image: 'https://images.unsplash.com/photo-1544099858-75feeb6f33a5?auto=format&fit=crop&w=900&q=80', store: 'eBay', storeIcon: 'storefront', storeColor: '#2563eb', state: 'Reacondicionado certificado', distance: 'Devolución 30 días', title: 'Apple MacBook Pro 14 M3 Pro certificado', description: 'Equipo revisado, limpio y listo para usar con garantía.', price: '$1,580', oldPrice: '$1,820', saving: '-$240', delivery: 'Envío protegido' },
 ]
 
-export const sources = [
-  { name: 'Amazon Prime', count: 32, active: true },
-  { name: 'eBay', count: 21, active: true },
-  { name: 'Wallapop', count: 19, active: true },
-  { name: 'FB Marketplace', count: 12, active: true },
-  { name: 'MercadoLibre', count: 0, active: false },
-]

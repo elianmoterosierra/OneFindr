@@ -1,8 +1,9 @@
 import { Icon } from '../../Icon/Icon'
 import './ProductCard.css'
+import type { Product } from '../../../types'
 
-export type Product = { id: number; image: string; store: string; storeIcon: 'storefront' | 'notification' | 'arrow'; storeColor: string; badge?: string; state: string; distance: string; title: string; description: string; price: string; oldPrice?: string; saving: string; delivery: string }
 type ProductCardProps = { product: Product }
+
 
 export function ProductCard({ product }: ProductCardProps) {
   return (

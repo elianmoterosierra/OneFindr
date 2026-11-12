@@ -6,6 +6,10 @@
     color: #0f172a;
 }
 
+.no-results {
+    margin-top: 10%;
+}
+
 .results-main {
     width: min(100% - 40px, 1120px);
     flex: 1;
