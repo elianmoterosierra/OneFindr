@@ -22,8 +22,6 @@ export function SearchToolbar({ query, onClear, onSearch }: SearchToolbarProps) 
 
 
 
-  const activeSource = useSources((state) => state.getActiveSources)
-
   const handleSearch = () => {
     onSearch(searchValue)
   }

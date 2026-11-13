@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Icon } from '../../Icon/Icon'
 import { useQueryParam } from '../../../hooks/useQueryParams'
 import { useSources } from '../../../store/useSource'
+
 import './FilterModal.css'
 
 type FilterModalProps = {
@@ -17,29 +18,43 @@ const PRODUCT_STATES = [
 ]
 
 const INITIAL_STATE = 'Todos'
-const INITIAL_MIN_PRICE = '1200'
-const INITIAL_MAX_PRICE = '1900'
+const INITIAL_MIN_PRICE = localStorage.getItem('minPrice') ?? '1200'
+const INITIAL_MAX_PRICE = localStorage.getItem('maxPrice') ?? '1900'
 
 export function FilterModal({ open, onClose }: FilterModalProps) {
 
   const sourcesList = useSources((state) => state.sources)
   const toggleSource = useSources((state) => state.toggleSource)
-  const { sources, setSources } = useQueryParam()
+  const { sources, setSources, setMinPrice, setMaxPrice } = useQueryParam()
 
 
   const [state, setState] = useState(INITIAL_STATE)
-  const [minPrice, setMinPrice] = useState(INITIAL_MIN_PRICE)
-  const [maxPrice, setMaxPrice] = useState(INITIAL_MAX_PRICE)
+  const [priceMin, setPriceMin] = useState(INITIAL_MIN_PRICE)
+  const [priceMax, setPriceMax] = useState(INITIAL_MAX_PRICE)
   const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>(
     sources ? sources.split(',') : []
   )
 
   if (!open) return null
 
+  const handleMinPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPriceMin(event.target.value)
+    setMinPrice(Number(event.target.value))
+    localStorage.setItem('minPrice', priceMin)
+  }
+  const handleMaxPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPriceMax(event.target.value)
+    setMaxPrice(Number(event.target.value))
+    localStorage.setItem('maxPrice', priceMax)
+  }
+
+
   const clearFilters = () => {
     setState(INITIAL_STATE)
-    setMinPrice(INITIAL_MIN_PRICE)
-    setMaxPrice(INITIAL_MAX_PRICE)
+    setMinPrice(Number(INITIAL_MIN_PRICE))
+    setMaxPrice(Number(INITIAL_MAX_PRICE))
+    setPriceMin(INITIAL_MIN_PRICE)
+    setPriceMax(INITIAL_MAX_PRICE)
   }
   const handleToggle = (key: string) => {
     setSelectedPlatforms((prev) =>
@@ -123,8 +138,8 @@ export function FilterModal({ open, onClose }: FilterModalProps) {
                 Mínimo
                 <input
                   type="number"
-                  value={minPrice}
-                  onChange={(event) => setMinPrice(event.target.value)}
+                  value={priceMin}
+                  onChange={handleMinPrice}
                 />
               </label>
 
@@ -132,30 +147,12 @@ export function FilterModal({ open, onClose }: FilterModalProps) {
                 Máximo
                 <input
                   type="number"
-                  value={maxPrice}
-                  onChange={(event) => setMaxPrice(event.target.value)}
+                  value={priceMax}
+                  onChange={handleMaxPrice}
                 />
               </label>
             </div>
-
-            <input
-              className="range-input"
-              type="range"
-              min="800"
-              max="2500"
-              value={maxPrice}
-              onChange={(event) => setMaxPrice(event.target.value)}
-            />
-
-            <div className="range-labels">
-              <span>$800</span>
-              <strong>
-                ${minPrice} – ${maxPrice}
-              </strong>
-              <span>$2,500+</span>
-            </div>
           </fieldset>
-
           <fieldset>
             <legend>Plataformas activas</legend>
 

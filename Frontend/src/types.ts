@@ -1,4 +1,19 @@
-export type Product = { id: number; image: string; store: string; storeIcon: 'storefront' | 'notification' | 'arrow'; storeColor: string; badge?: string; state: string; distance: string; title: string; description: string; price: string; oldPrice?: string; saving: string; delivery: string }
+export type Product = {
+    id: number;
+    image: string;
+    store: string;
+    storeIcon: 'storefront' | 'notification' | 'arrow';
+    storeColor: string;
+    badge?: string;
+    state: string;
+    distance: string;
+    title: string;
+    description: string;
+    price: number;
+    oldPrice?: number;
+    saving: string;
+    delivery: string
+}
 
 
 

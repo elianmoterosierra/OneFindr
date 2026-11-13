@@ -9,15 +9,16 @@ import './resultOfSearch.css'
 import { useQueryParam } from '../../hooks/useQueryParams'
 import { useFilterProducts } from '../../hooks/useFilterProduct'
 
-
-
-
 export function ResultOfSearch() {
+  const { query, setQuery, minPrice, maxPrice, sources } = useQueryParam()
 
-  const { query, setQuery } = useQueryParam();
-  const { sources } = useQueryParam()
-
-  const filteredProducts = useFilterProducts(query, sources ? sources.split(',') : [], products)
+  const filteredProducts = useFilterProducts(
+    query,
+    sources ? sources.split(',') : [],
+    products,
+    minPrice,
+    maxPrice
+  )
   const TOTAL_RESULTS = products.length
 
   return (
@@ -25,11 +26,19 @@ export function ResultOfSearch() {
       <Header />
 
       <main className="results-main">
-        <SearchToolbar source={sources ? sources.split(',') : []} query={query} products={products} onClear={() => setQuery('')} onSearch={setQuery} />
+        <SearchToolbar
+          source={sources ? sources.split(',') : []}
+          query={query}
+          products={products}
+          onClear={() => setQuery('')}
+          onSearch={setQuery}
+        />
         <ResultsControls />
 
         <section className="products-grid" aria-label="Resultados de búsqueda">
-          {filteredProducts.map((product) => <ProductCard key={product.id} product={product} />)}
+          {filteredProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
           {filteredProducts.length === 0 && (
             <p className="no-results">No se encontraron productos que coincidan con tu búsqueda.</p>
           )}

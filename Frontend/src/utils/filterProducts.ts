@@ -8,7 +8,13 @@ function normalizeText(text: string) {
         .trim()
 }
 
-export function filterInput(query: string, sources: string[], products: Product[]) {
+export function filterInput(
+    query: string,
+    sources: string[],
+    products: Product[],
+    minPrice?: number,
+    maxPrice?: number
+) {
     const normalizedQuery = normalizeText(query)
     const words = normalizedQuery.split(/\s+/).filter(Boolean)
     const sourcesFilter = sources.map((source) => normalizeText(source).replace(/-/g, ' '))
@@ -22,6 +28,10 @@ export function filterInput(query: string, sources: string[], products: Product[
             normalizedStore.includes(src) || src.includes(normalizedStore)
         )
 
-        return matchQuery && matchSource
+        const matchMin = minPrice !== undefined && !isNaN(minPrice) ? product.price >= minPrice : true
+        const matchMax = maxPrice !== undefined && !isNaN(maxPrice) ? product.price <= maxPrice : true
+        const matchPrice = matchMin && matchMax
+
+        return matchQuery && matchSource && matchPrice
     })
 }
