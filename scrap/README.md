@@ -20,7 +20,7 @@ Vite reenvía `/api` al servicio en `http://127.0.0.1:8000`.
 
 ## Fuentes
 
-- **MercadoLibre:** usa su API pública. El sitio predeterminado es `MLA`; puede cambiarse con `MELI_SITE_ID` (por ejemplo, `MLM` o `MLC`). Si la API requiere autenticación para una cuenta o región, configura `MELI_ACCESS_TOKEN`.
+- **MercadoLibre:** usa su API oficial y requiere un token OAuth en `MELI_ACCESS_TOKEN`; la búsqueda pública sin autenticar responde HTTP 403. El sitio predeterminado es `MLA`; puede cambiarse con `MELI_SITE_ID` (por ejemplo, `MLM` o `MLC`).
 - **eBay:** usa Browse API. Configura `EBAY_CLIENT_ID` y `EBAY_CLIENT_SECRET` con credenciales de aplicación de eBay. El marketplace predeterminado es `EBAY_US`; puede cambiarse con `EBAY_MARKETPLACE_ID`.
 - **Amazon, Wallapop y Facebook Marketplace:** no se extrae contenido sin acceso oficial disponible. El API devuelve el motivo por fuente; no usa sesiones privadas, endpoints no documentados ni técnicas para evadir controles de acceso.
 

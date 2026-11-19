@@ -1,4 +1,6 @@
 import json
+import io
+import os
 import threading
 import unittest
 from unittest.mock import patch
@@ -9,6 +11,7 @@ from urllib.request import urlopen
 from server import (
     MarketplaceError,
     SearchHandler,
+    _request_json,
     _fetch_ebay_product,
     _fetch_mercadolibre_product,
     _product,
@@ -98,6 +101,29 @@ class SearchSourceTests(unittest.TestCase):
         self.assertEqual(result["products"], [])
         self.assertEqual(result["errors"], {"ebay": "eBay: sin conexión"})
 
+    @patch.dict(os.environ, {}, clear=True)
+    @patch("server._request_json")
+    def test_mercadolibre_without_oauth_token_returns_actionable_error(self, request_json):
+        result = search_products("phone", ["mercadolibre"])
+
+        self.assertEqual(result["products"], [])
+        self.assertIn("MELI_ACCESS_TOKEN", result["errors"]["mercadolibre"])
+        request_json.assert_not_called()
+
+    @patch(
+        "server.urllib.request.urlopen",
+        side_effect=HTTPError(
+            "https://api.mercadolibre.com/sites/MLA/search",
+            403,
+            "Forbidden",
+            {},
+            io.BytesIO(b'{"message":"forbidden","error":"forbidden","status":403}'),
+        ),
+    )
+    def test_mercadolibre_forbidden_json_is_reported_as_auth_error(self, _urlopen):
+        with self.assertRaisesRegex(MarketplaceError, "MELI_ACCESS_TOKEN"):
+            _request_json("https://api.mercadolibre.com/sites/MLA/search")
+
     @patch("server._request_json")
     def test_mercadolibre_mapping_includes_description_image_and_listing_url(self, request_json):
         request_json.side_effect = [
@@ -164,6 +190,12 @@ class SearchHandlerTests(unittest.TestCase):
                 payload = json.loads(response.read())
             self.assertEqual(payload["products"], [])
             self.assertIn("amazon", payload["errors"])
+
+            with patch.dict(os.environ, {}, clear=True):
+                with urlopen(base_url + "?q=phone&sources=mercadolibre") as response:
+                    payload = json.loads(response.read())
+            self.assertEqual(payload["products"], [])
+            self.assertIn("MELI_ACCESS_TOKEN", payload["errors"]["mercadolibre"])
         finally:
             server.shutdown()
             server.server_close()

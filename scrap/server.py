@@ -53,7 +53,29 @@ def _request_json(
         with urllib.request.urlopen(request, timeout=TIMEOUT_SECONDS) as response:
             payload = json.loads(response.read().decode("utf-8"))
     except urllib.error.HTTPError as error:
-        raise MarketplaceError(f"La plataforma respondió con HTTP {error.code}.") from error
+        response_body = error.read(8192)
+        try:
+            error_payload = json.loads(response_body.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            error_payload = {}
+        provider_message = ""
+        if isinstance(error_payload, dict):
+            provider_message = error_payload.get("message") or error_payload.get("error") or ""
+        provider_message = (
+            provider_message[:160]
+            if isinstance(provider_message, str)
+            else ""
+        )
+        if urllib.parse.urlparse(url).hostname == "api.mercadolibre.com" and error.code == 403:
+            message = (
+                "MercadoLibre rechazó el acceso (HTTP 403). Verifica que "
+                "MELI_ACCESS_TOKEN sea un token OAuth válido y tenga permisos "
+                "para el sitio configurado."
+            )
+        else:
+            detail = f" ({provider_message})" if provider_message else ""
+            message = f"La plataforma respondió con HTTP {error.code}{detail}."
+        raise MarketplaceError(message) from error
     except (urllib.error.URLError, TimeoutError) as error:
         raise MarketplaceError("No se pudo conectar con la plataforma.") from error
     except (UnicodeDecodeError, json.JSONDecodeError) as error:
@@ -199,6 +221,11 @@ def _fetch_mercadolibre_product(
 
 
 def search_mercadolibre(query: str) -> tuple[list[dict[str, Any]], list[str]]:
+    if not os.environ.get("MELI_ACCESS_TOKEN", "").strip():
+        raise MarketplaceError(
+            "MercadoLibre requiere un token OAuth. Configura MELI_ACCESS_TOKEN; "
+            "la búsqueda pública responde HTTP 403."
+        )
     site_id = os.environ.get("MELI_SITE_ID", "MLA").strip().upper()
     encoded_query = urllib.parse.urlencode(
         {"q": query, "limit": MAX_RESULTS_PER_SOURCE}
