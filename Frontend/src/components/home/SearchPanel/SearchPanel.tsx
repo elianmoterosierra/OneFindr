@@ -3,6 +3,7 @@ import { Icon } from '../../Icon/Icon'
 import './SearchPanel.css'
 import { PlatformChip } from '../PlatformChip/PlatformChip'
 import { useSources } from '../../../store/useSource'
+import type { Source } from '../../../types'
 
 
 type SearchPanelProps = {
@@ -45,10 +46,7 @@ function SearchInput({ value, onChange, onSubmit }: SearchInputProps) {
   )
 }
 
-function SearchChips({ sources }) {
-
-
-
+function SearchChips({ sources }: { sources: Source[] }) {
   return (
     <div className="search-chips">
       {sources.map((source) => (
@@ -64,9 +62,6 @@ function SearchChips({ sources }) {
     </div>
   )
 }
-
-
-
 
 export function SearchPanel({
   query,

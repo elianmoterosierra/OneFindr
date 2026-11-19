@@ -24,6 +24,9 @@ Desde la carpeta `Frontend`:
 npm install
 ```
 
+Para obtener resultados reales, inicia también el servicio Python descrito en [`../scrap/README.md`](../scrap/README.md). El servidor de desarrollo reenvía las peticiones `/api` a ese servicio.
+Configura las credenciales de las APIs en `scrap/.env`; la guía está en [`../scrap/guide.md`](../scrap/guide.md).
+
 ## Comandos disponibles
 
 ```bash
@@ -43,6 +46,9 @@ npm run preview
 ## Funcionalidades
 
 - Búsqueda de productos desde la página principal.
+- Resultados en vivo de MercadoLibre y eBay mediante sus APIs oficiales.
+- Estado de disponibilidad de plataformas; las fuentes sin soporte o credenciales quedan deshabilitadas y se explican con avisos informativos.
+- Reintento por plataforma cuando ocurre un error real de API.
 - Navegación a resultados mediante el parámetro `q` de la URL.
 - Filtrado por título ignorando mayúsculas, minúsculas y acentos.
 - Filtrado por plataformas activas.

@@ -63,7 +63,10 @@ export function FilterModal({ open, onClose }: FilterModalProps) {
     toggleSource(key)
   }
   const handleApply = () => {
-    setSources(selectedPlatforms) // Actualiza la URL (?sources=...) y refresca los resultados
+    const availableSources = selectedPlatforms.filter((key) =>
+      sourcesList.some((source) => source.key === key && source.status === 'available')
+    )
+    setSources(availableSources)
     onClose()
   }
 
@@ -158,15 +161,20 @@ export function FilterModal({ open, onClose }: FilterModalProps) {
 
             <div className="marketplace-options">
               {sourcesList.map((source) => (
-                <label key={source.key}>
-                  <input type="checkbox" defaultChecked={source.active}
+                <label
+                  key={source.key}
+                  className={source.status === 'available' ? '' : 'marketplace-disabled'}
+                  title={source.reason}
+                >
+                  <input
+                    type="checkbox"
+                    checked={selectedPlatforms.includes(source.key)}
+                    disabled={source.status !== 'available'}
+                    title={source.reason}
                     onChange={() => handleToggle(source.key)}
-
                   />
                   <span>{source.name}</span>
-                  <small>{source.count}</small>
-
-
+                  {source.status !== 'available' && <small>{source.reason}</small>}
                 </label>
               ))}
             </div>
