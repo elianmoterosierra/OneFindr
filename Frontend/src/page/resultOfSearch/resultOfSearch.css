@@ -10,6 +10,26 @@
     margin-top: 10%;
 }
 
+.search-status {
+    margin: 0 0 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    color: #334155;
+    background: #f1f5f9;
+    font-size: 13px;
+}
+
+.search-error {
+    color: #991b1b;
+    background: #fef2f2;
+}
+
+.results-total {
+    color: #64748b;
+    font-size: 12px;
+    text-align: center;
+}
+
 .results-main {
     width: min(100% - 40px, 1120px);
     flex: 1;

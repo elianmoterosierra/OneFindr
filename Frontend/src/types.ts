@@ -1,17 +1,20 @@
 export type Product = {
-    id: number;
+    id: string;
+    source: string;
     image: string;
     store: string;
     storeIcon: 'storefront' | 'notification' | 'arrow';
     storeColor: string;
+    url: string;
     badge?: string;
     state: string;
     distance: string;
     title: string;
     description: string;
     price: number;
+    currency: string;
     oldPrice?: number;
-    saving: string;
+    saving?: string;
     delivery: string
 }
 
