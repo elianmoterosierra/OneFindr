@@ -6,6 +6,9 @@ import type { Product } from '../../../types'
 type ProductCardProps = { product: Product }
 
 function formatPrice(value: number, currency: string) {
+  if (!currency) {
+    return new Intl.NumberFormat(undefined, { maximumFractionDigits: 2 }).format(value)
+  }
   try {
     return new Intl.NumberFormat(undefined, { style: 'currency', currency }).format(value)
   } catch {

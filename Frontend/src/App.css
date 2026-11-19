@@ -16,3 +16,4 @@ h1 em { font-style: italic; }
   .eyebrow { font-size: 9px; }
   .hero-description { font-size: 14px; }
 }
+.sources-load-error { margin: 0; padding: 8px 16px; color: #7c2d12; background: #fff7ed; font-size: 12px; text-align: center; }
